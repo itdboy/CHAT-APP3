@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { User } from "lucide-react";
-import { Mail } from "lucide-react";
-import { Lock } from "lucide-react";
-import { Eye, EyeOff } from "lucide-react";
-import { Loader2 } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Loader2,
+  Lock,
+  Mail,
+  MessageSquare,
+  User,
+} from "lucide-react";
 import { Link } from "react-router-dom";
+
 import AuthImagePattern from "../components/AuthImagePattern";
 import toast from "react-hot-toast";
- 
+
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -16,7 +21,8 @@ const SignUpPage = () => {
     email: "",
     password: "",
   });
-  const { signUp, isSigningUp } = useAuthStore();
+
+  const { signup, isSigningUp } = useAuthStore();
 
   const validateForm = () => {
     if (!formData.fullName.trim()) return toast.error("Full name is required");
@@ -35,10 +41,7 @@ const SignUpPage = () => {
 
     const success = validateForm();
 
-    //ถ้าสำเร็จเรียก function signUp with formData
-    if (success) {
-      signUp(formData);
-    }
+    if (success === true) signup(formData);
   };
 
   return (
@@ -53,7 +56,7 @@ const SignUpPage = () => {
                 className="size-12 rounded-xl bg-primary/10 flex items-center justify-center 
               group-hover:bg-primary/20 transition-colors"
               >
-                {/* <MessageSquare className="size-6 text-primary" /> */}
+                <MessageSquare className="size-6 text-primary" />
               </div>
               <h1 className="text-2xl font-bold mt-2">Create Account</h1>
               <p className="text-base-content/60">
@@ -163,12 +166,11 @@ const SignUpPage = () => {
 
       {/* right side */}
 
-      { <AuthImagePattern
+      <AuthImagePattern
         title="Join our community"
         subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
-      /> }
+      />
     </div>
   );
 };
-
 export default SignUpPage;

@@ -4,11 +4,19 @@ import { generateToken } from "../lib/utils.js";
 import cloudinary from "../lib/cloudinary.js";
 
 export const signup = async (req, res) => {
+  console.log("=== SIGNUP REQUEST RECEIVED ===");
+  console.log("Request method:", req.method);
+  console.log("Request URL:", req.url);
+  console.log("Request headers:", JSON.stringify(req.headers, null, 2));
   console.log("Request body:", req.body);
+  console.log("Body type:", typeof req.body);
+  console.log("Body keys:", Object.keys(req.body || {}));
   console.log("Content-Type:", req.get("Content-Type"));
+  console.log("================================");
 
   // Check if req.body exists and has required properties
   if (!req.body || typeof req.body !== "object") {
+    console.log("BODY VALIDATION FAILED - returning error");
     return res.status(400).json({
       message:
         "Invalid request body. Please send JSON data with Content-Type: application/json",
