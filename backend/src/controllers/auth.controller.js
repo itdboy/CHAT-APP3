@@ -136,12 +136,9 @@ export const updateProfile = async (req, res) => {
       userId,
       { profilePicture: uploadResponse.secure_url },
       { new: true }
-    );
+    ).select("-password");
 
-    res.status(200).json({
-      message: "Profile picture updated successfully.",
-      user: updatedUser,
-    });
+    res.status(200).json(updatedUser);
   } catch (error) {
     console.error("Error updating profile picture:", error);
     return res.status(500).json({ message: "Server error. Please try again." });

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
-
+ 
 
 // รับค่า formData จาก form signup แล้วส่งไปที่ backend
 export const useAuthStore = create((set) => ({
@@ -65,6 +65,22 @@ export const useAuthStore = create((set) => ({
       toast.error("Logout failed. Please try again.");
       console.log("Error during logout:", err);
     }
-  }
+  },
+
+  updateProfile: async (data) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const res = await axiosInstance.post("/auth/update-profile", data);
+      set({ authUser: res.data });
+      toast.success("Profile updated successfully!");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Profile update failed. Please try again.");
+      console.log("Error updating profile:", err);
+    } finally {
+      set({ isUpdatingProfile: false });
+    }
+  },  
+
+
 
 }));
